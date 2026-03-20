@@ -1,7 +1,8 @@
+import React from 'react';
 import { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 
-export default function Splash({ onFinish }) {
+export default function Splash({ onFinish }: { onFinish: () => void }) {
   const opacity = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(0.8)).current;
 
@@ -27,7 +28,7 @@ export default function Splash({ onFinish }) {
   return (
     <View style={styles.container}>
       <Animated.Image
-        source={require('./assets/Logomarca-AnalysisWifi.png')}
+        source={require('./assets/Logo-AnalysisWifi.png')}
         style={[
           styles.logo,
           {

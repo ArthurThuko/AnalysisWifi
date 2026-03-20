@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import * as SplashScreen from 'expo-splash-screen';
 import Splash from './SplashScreen';
-import { View, Text } from 'react-native';
 import Home from './app/index';
+import React from 'react';
+import { SplashScreen } from 'expo-router';
 
 SplashScreen.preventAutoHideAsync();
 
