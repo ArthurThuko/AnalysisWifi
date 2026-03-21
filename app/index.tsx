@@ -18,7 +18,7 @@ export default function Home() {
         source={require("../assets/Logomarca-AnalysisWifi.png")}
       />
 
-      <TouchableOpacity onPress={() => router.push('/redeConectada')} style={styles.button}>
+      <TouchableOpacity onPress={() => router.push('/redesEscaneadas')} style={styles.button}>
         <Text style={styles.textButton}>Escanear Redes</Text>
       </TouchableOpacity>
     </View>
