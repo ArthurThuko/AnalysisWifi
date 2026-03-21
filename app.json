@@ -4,7 +4,7 @@
     "slug": "analysis-wifi",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Logo-AnalysisWifi.png",
     "userInterfaceStyle": "light",
     "splash": {
       "resizeMode": "contain",
@@ -14,7 +14,7 @@
       "supportsTablet": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/Logo-AnalysisWifi.png"
     },
     "plugins": [
       "expo-router"

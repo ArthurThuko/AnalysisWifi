@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   logo: {
     marginBottom: 50,
     width: "100%",
-    height: "13%",
+    height: "12%",
   },
   button: {
     backgroundColor: "#1F7FB6",
