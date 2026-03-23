@@ -5,14 +5,22 @@ import {
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import React from "react";
-import { useColorScheme } from "react-native";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme == "light" ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }} />
+    <ThemeProvider value={DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="redesEscaneadas" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="redeConectada"
+          options={{ headerShown: true, title: "" }}
+        />
+        <Stack.Screen
+          name="redeDetectada"
+          options={{ headerShown: true, title: "" }}
+        />
+      </Stack>
     </ThemeProvider>
   );
 }
