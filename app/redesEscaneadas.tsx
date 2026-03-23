@@ -23,7 +23,10 @@ export default function RedesEscaneadas() {
                 style={{ width: 130, height: 110 }}
               />
 
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/redeConectada')}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => router.push("/redeConectada")}
+              >
                 <Text style={styles.textButton}>Ver Detalhes</Text>
               </TouchableOpacity>
             </View>
@@ -54,7 +57,7 @@ export default function RedesEscaneadas() {
       />
 
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.Titulo}>Redes Detectadas</Text>
+        <Text style={styles.Titulo}>Redes Escaneadas</Text>
 
         <View style={styles.infoGeral}>
           <View style={styles.containerColunas}>
@@ -67,7 +70,10 @@ export default function RedesEscaneadas() {
 
             <View style={styles.colunaDireita}>
               <Text style={styles.subTitulo}>Rede Exemplo 1</Text>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/redeDetectada')}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => router.push("/redeDetectada")}
+              >
                 <Text style={styles.textButton}>Ver Detalhes</Text>
               </TouchableOpacity>
             </View>
@@ -85,7 +91,10 @@ export default function RedesEscaneadas() {
 
             <View style={styles.colunaDireita}>
               <Text style={styles.subTitulo}>Rede Exemplo 2</Text>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/redeDetectada')}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => router.push("/redeDetectada")}
+              >
                 <Text style={styles.textButton}>Ver Detalhes</Text>
               </TouchableOpacity>
             </View>
@@ -103,13 +112,23 @@ export default function RedesEscaneadas() {
 
             <View style={styles.colunaDireita}>
               <Text style={styles.subTitulo}>Rede Exemplo 3</Text>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/redeDetectada')}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => router.push("/redeDetectada")}
+              >
                 <Text style={styles.textButton}>Ver Detalhes</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </ScrollView>
+
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => console.log("Atualizar")}
+      >
+        <Text style={styles.fabIcon}>⟳</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -174,6 +193,29 @@ const styles = StyleSheet.create({
   textButton: {
     fontSize: 15,
     textAlign: "center",
+    color: "#fff",
+  },
+
+  fab: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: "#1F7FB6",
+    justifyContent: "center",
+    alignItems: "center",
+
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+  },
+
+  fabIcon: {
+    fontSize: 28,
     color: "#fff",
   },
 });
