@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   View,
@@ -9,11 +10,11 @@ import {
 } from "react-native";
 
 export default function RedesEscaneadas() {
+  const router = useRouter();
+
   return (
     <View style={{ flex: 1 }}>
-      <View style={styles.header}></View>
-
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.header}>
         <View style={styles.infoGeral}>
           <View style={styles.containerColunas}>
             <View style={styles.colunaEsquerda}>
@@ -22,7 +23,7 @@ export default function RedesEscaneadas() {
                 style={{ width: 130, height: 110 }}
               />
 
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/redeConectada')}>
                 <Text style={styles.textButton}>Ver Detalhes</Text>
               </TouchableOpacity>
             </View>
@@ -40,7 +41,74 @@ export default function RedesEscaneadas() {
               </Text>
             </View>
           </View>
-        </View>{" "}
+        </View>
+      </View>
+
+      {/* Linha divisória */}
+      <View
+        style={{
+          height: 3,
+          backgroundColor: "#1F7FB6",
+          marginHorizontal: 10,
+        }}
+      />
+
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.Titulo}>Redes Detectadas</Text>
+
+        <View style={styles.infoGeral}>
+          <View style={styles.containerColunas}>
+            <View style={styles.colunaEsquerda}>
+              <Image
+                source={require("../assets/Wifi-Excelente-Icon.png")}
+                style={{ width: 90, height: 70 }}
+              />
+            </View>
+
+            <View style={styles.colunaDireita}>
+              <Text style={styles.subTitulo}>Rede Exemplo 1</Text>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/redeDetectada')}>
+                <Text style={styles.textButton}>Ver Detalhes</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.infoGeral}>
+          <View style={styles.containerColunas}>
+            <View style={styles.colunaEsquerda}>
+              <Image
+                source={require("../assets/Wifi-Excelente-Icon.png")}
+                style={{ width: 90, height: 70 }}
+              />
+            </View>
+
+            <View style={styles.colunaDireita}>
+              <Text style={styles.subTitulo}>Rede Exemplo 2</Text>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/redeDetectada')}>
+                <Text style={styles.textButton}>Ver Detalhes</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.infoGeral}>
+          <View style={styles.containerColunas}>
+            <View style={styles.colunaEsquerda}>
+              <Image
+                source={require("../assets/Wifi-Excelente-Icon.png")}
+                style={{ width: 90, height: 70 }}
+              />
+            </View>
+
+            <View style={styles.colunaDireita}>
+              <Text style={styles.subTitulo}>Rede Exemplo 3</Text>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/redeDetectada')}>
+                <Text style={styles.textButton}>Ver Detalhes</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -51,13 +119,9 @@ const styles = StyleSheet.create({
     padding: 30,
     flexGrow: 1,
     alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
   },
 
   header: {
-    height: 80,
-    backgroundColor: "#0A1F44",
     justifyContent: "center",
     alignItems: "center",
   },
