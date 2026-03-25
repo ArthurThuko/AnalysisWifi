@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,9 +8,38 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { escanearRedes, getRedeAtual } from "../services/wifiService";
+import { getFrequencia, getCanal, getSeguranca } from "../utils/wifiUtils";
 
 export default function RedesEscaneadas() {
   const router = useRouter();
+
+  const carregar = async () => {
+    const lista = await escanearRedes();
+
+    const tratadas = lista.map((r: any) => ({
+      nome: r.SSID,
+      sinal: r.level,
+      frequencia: getFrequencia(r.frequency),
+      canal: getCanal(r.frequency),
+      seguranca: getSeguranca(r.capabilities),
+    }));
+
+    setRedes(tratadas);
+
+    const ssidAtual = await getRedeAtual();
+
+    const redeEncontrada = tratadas.find((r) => r.nome === ssidAtual);
+
+    setRedeAtual(redeEncontrada);
+  };
+
+  useEffect(() => {
+    carregar();
+  }, []);
+
+  const [redes, setRedes] = useState<any[]>([]);
+  const [redeAtual, setRedeAtual] = useState<any>(null);
 
   return (
     <View style={{ flex: 1 }}>
@@ -33,14 +62,24 @@ export default function RedesEscaneadas() {
 
             <View style={styles.colunaDireita}>
               <Text style={styles.subTitulo}>Rede Conectada</Text>
-              <Text style={styles.textoNormal}>Nome da rede: FulanodeTal</Text>
               <Text style={styles.textoNormal}>
-                Intensidade do sinal: Forte
+                Nome da rede: {redeAtual?.nome || "Carregando..."}
               </Text>
-              <Text style={styles.textoNormal}>Canal utilizado: 11</Text>
-              <Text style={styles.textoNormal}>Frequência da rede: 2.4Gz</Text>
+
               <Text style={styles.textoNormal}>
-                Tipo de segurança: Insegura
+                Intensidade do sinal: {redeAtual?.sinal ?? "-"}
+              </Text>
+
+              <Text style={styles.textoNormal}>
+                Canal utilizado: {redeAtual?.canal ?? "-"}
+              </Text>
+
+              <Text style={styles.textoNormal}>
+                Frequência da rede: {redeAtual?.frequencia ?? "-"}
+              </Text>
+
+              <Text style={styles.textoNormal}>
+                Tipo de segurança: {redeAtual?.seguranca ?? "-"}
               </Text>
             </View>
           </View>
@@ -59,74 +98,40 @@ export default function RedesEscaneadas() {
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.Titulo}>Redes Escaneadas</Text>
 
-        <View style={styles.infoGeral}>
-          <View style={styles.containerColunas}>
-            <View style={styles.colunaEsquerda}>
-              <Image
-                source={require("../assets/Wifi-Excelente-Icon.png")}
-                style={{ width: 90, height: 70 }}
-              />
-            </View>
+        {redes.map((rede, index) => (
+          <View key={index} style={styles.infoGeral}>
+            <View style={styles.containerColunas}>
+              <View style={styles.colunaEsquerda}>
+                <Image
+                  source={require("../assets/Wifi-Excelente-Icon.png")}
+                  style={{ width: 90, height: 70 }}
+                />
+              </View>
 
-            <View style={styles.colunaDireita}>
-              <Text style={styles.subTitulo}>Rede Exemplo 1</Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => router.push("/redeDetectada")}
-              >
-                <Text style={styles.textButton}>Ver Detalhes</Text>
-              </TouchableOpacity>
+              <View style={styles.colunaDireita}>
+                <Text style={styles.subTitulo}>{rede.nome}</Text>
+                <Text style={styles.textoNormal}>Sinal: {rede.sinal}</Text>
+                <Text style={styles.textoNormal}>
+                  Frequência: {rede.frequencia}
+                </Text>
+                <Text style={styles.textoNormal}>Canal: {rede.canal}</Text>
+                <Text style={styles.textoNormal}>
+                  Segurança: {rede.seguranca}
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => router.push("/redeDetectada")}
+                >
+                  <Text style={styles.textButton}>Ver Detalhes</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-
-        <View style={styles.infoGeral}>
-          <View style={styles.containerColunas}>
-            <View style={styles.colunaEsquerda}>
-              <Image
-                source={require("../assets/Wifi-Excelente-Icon.png")}
-                style={{ width: 90, height: 70 }}
-              />
-            </View>
-
-            <View style={styles.colunaDireita}>
-              <Text style={styles.subTitulo}>Rede Exemplo 2</Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => router.push("/redeDetectada")}
-              >
-                <Text style={styles.textButton}>Ver Detalhes</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.infoGeral}>
-          <View style={styles.containerColunas}>
-            <View style={styles.colunaEsquerda}>
-              <Image
-                source={require("../assets/Wifi-Excelente-Icon.png")}
-                style={{ width: 90, height: 70 }}
-              />
-            </View>
-
-            <View style={styles.colunaDireita}>
-              <Text style={styles.subTitulo}>Rede Exemplo 3</Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => router.push("/redeDetectada")}
-              >
-                <Text style={styles.textButton}>Ver Detalhes</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+        ))}
       </ScrollView>
 
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => console.log("Atualizar")}
-      >
+      <TouchableOpacity style={styles.fab} onPress={carregar}>
         <Text style={styles.fabIcon}>⟳</Text>
       </TouchableOpacity>
     </View>
