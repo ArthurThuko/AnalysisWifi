@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import CardInfoGeral from "../components/CardInfoGeral";
 
 export default function RedeDetectada() {
   type NivelWifi = "Excelente" | "Bom" | "Ruim" | "Pessimo";
@@ -33,20 +34,7 @@ export default function RedeDetectada() {
         <Text style={styles.Titulo}>Nome do Wifi</Text>
       </View>
 
-      <View style={styles.infoGeral}>
-        <Text style={styles.Titulo}>Informações Gerais</Text>
-        <Text style={styles.textoNormal}>Nome da rede: FulanodeTal</Text>
-        <Text style={styles.textoNormal}>Intensidade do sinal: Forte</Text>
-        <Text style={styles.textoNormal}>Canal utilizado: 11</Text>
-        <Text style={styles.textoNormal}>Frequência da rede: 2.4Gz</Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={styles.textoNormal}>Tipo de segurança: Insegura</Text>
-          <Image
-            style={{ width: 18, height: 18, marginLeft: 5 }}
-            source={require("../assets/Atencao-Icon.png")}
-          ></Image>
-        </View>
-      </View>
+      <CardInfoGeral rede={undefined} />
 
       <View style={styles.infoGeral}>
         <Text style={styles.Titulo}>Qualidade do Wifi</Text>
@@ -159,12 +147,6 @@ const styles = StyleSheet.create({
   colunaDireita: {
     flex: 1,
     justifyContent: "center",
-  },
-
-  subTitulo: {
-    fontSize: 30,
-    fontWeight: "bold",
-    marginBottom: 5,
   },
 
   button: {
