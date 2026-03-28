@@ -7,7 +7,7 @@ export default function SubTitulo({ texto }: { texto: string }) {
 
 const styles = StyleSheet.create({
   subTitulo: {
-    fontSize: 23,
+    fontSize: 21,
     fontWeight: "bold",
     marginBottom: 5,
   },

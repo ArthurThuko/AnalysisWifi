@@ -12,11 +12,11 @@ export default function Button({ onPress }: { onPress: () => void }) {
 const styles = StyleSheet.create({
   fab: {
     position: "absolute",
-    bottom: 20,
+    bottom: 10,
     right: 20,
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     backgroundColor: "#1F7FB6",
     justifyContent: "center",
     alignItems: "center",

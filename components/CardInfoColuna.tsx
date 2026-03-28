@@ -21,9 +21,10 @@ interface Rede {
 interface Props {
   rede: Rede;
   imagem: ImageSourcePropType;
+  redeAtual?: boolean;
 }
 
-export default function CardInfoColuna({ rede, imagem }: Props) {
+export default function CardInfoColuna({ rede, imagem, redeAtual }: Props) {
   const router = useRouter();
 
   return (
@@ -40,7 +41,8 @@ export default function CardInfoColuna({ rede, imagem }: Props) {
         </View>
 
         <View style={styles.colunaDireita}>
-          <SubTitulo texto="Rede Conectada" />
+          {redeAtual && <SubTitulo texto="Rede Atual" />}
+          {!redeAtual && <SubTitulo texto="Rede Detectada" />}
 
           <TextoNormal texto={`Nome da rede: ${rede?.nome || "Carregando..."}`} />
           <TextoNormal texto={`Intensidade do sinal: ${rede?.sinal || "-"}`} />

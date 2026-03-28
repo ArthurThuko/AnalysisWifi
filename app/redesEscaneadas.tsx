@@ -1,9 +1,6 @@
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { escanearRedes, getRedeAtual } from "../services/wifiService";
 import { getFrequencia, getCanal, getSeguranca } from "../utils/wifiUtils";
@@ -44,6 +41,7 @@ export default function RedesEscaneadas() {
         <CardInfoColuna
           rede={redeAtual}
           imagem={require("../assets/Wifi-Excelente-Icon.png")}
+          redeAtual={true}
         />
       </View>
 
@@ -52,14 +50,18 @@ export default function RedesEscaneadas() {
       <ContainerScroll>
         <Titulo texto="Redes Escaneadas"></Titulo>
 
-        {redes.map((rede, index) => (
-          <View key={index}>
-            <CardInfoColuna
-              rede={rede}
-              imagem={require("../assets/Wifi-Excelente-Icon.png")}
-            />
-          </View>
-        ))}
+        {redes.map(
+          (rede, index) =>
+            rede.nome !== redeAtual?.nome && (
+              <View key={index}>
+                <CardInfoColuna
+                  rede={rede}
+                  imagem={require("../assets/Wifi-Excelente-Icon.png")}
+                  redeAtual={false}
+                />
+              </View>
+            ),
+        )}
       </ContainerScroll>
 
       <ButtonReload onPress={carregarRedes}></ButtonReload>
