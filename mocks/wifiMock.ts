@@ -25,9 +25,4 @@ export const wifiMock: WifiNetwork[] = [
     frequency: 5180,
     capabilities: "[ESS]",
   },
-  {
-    SSID: "",
-    level: 0,
-    capabilities: "",
-  },
 ];

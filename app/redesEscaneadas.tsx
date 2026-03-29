@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 
 import { escanearRedes, getRedeAtual } from "../services/wifiService";
-import { getFrequencia, getCanal, getSeguranca } from "../utils/wifiUtils";
+import { getFrequencia, getCanal, getSeguranca, getQualidadeSinal } from "../utils/wifiUtils";
 
 import CardInfoColuna from "../components/CardInfoColuna";
 import LinhaDivisoria from "../components/LinhaDivisoria";
@@ -16,7 +16,7 @@ export default function RedesEscaneadas() {
     const lista = await escanearRedes();
     const tratadas = lista.map((r: any) => ({
       nome: r.SSID,
-      sinal: r.level,
+      sinal: getQualidadeSinal(r.level),
       frequencia: getFrequencia(r.frequency),
       canal: getCanal(r.frequency),
       seguranca: getSeguranca(r.capabilities),
