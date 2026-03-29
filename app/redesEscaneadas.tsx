@@ -46,7 +46,7 @@ export default function RedesEscaneadas() {
       <View style={styles.header}>
         <CardInfoColuna
           rede={redeAtual}
-          imagem={require("../assets/Wifi-Excelente-Icon.png")}
+          imagem={require("../assets/Wifi-Otimo-Icon.png")}
           redeAtual={true}
         />
       </View>
@@ -62,7 +62,7 @@ export default function RedesEscaneadas() {
               <View key={index}>
                 <CardInfoColuna
                   rede={rede}
-                  imagem={require("../assets/Wifi-Excelente-Icon.png")}
+                  imagem={require("../assets/Wifi-Otimo-Icon.png")}
                   redeAtual={false}
                 />
               </View>

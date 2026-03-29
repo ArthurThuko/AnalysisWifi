@@ -8,18 +8,19 @@ import {
   ScrollView,
 } from "react-native";
 import CardInfoGeral from "../components/CardInfoGeral";
+import SubTitulo from "../components/SubTitulo";
 
 export default function RedeDetectada() {
-  type NivelWifi = "Excelente" | "Bom" | "Ruim" | "Pessimo";
+  type NivelWifi = "Ótimo" | "Bom" | "Ruim" | "Pessimo";
 
   const imagensWifi: Record<NivelWifi, any> = {
-    Excelente: require("../assets/Wifi-Excelente-Icon.png"),
+    Ótimo: require("../assets/Wifi-Otimo-Icon.png"),
     Bom: require("../assets/Wifi-Bom-Icon.png"),
     Ruim: require("../assets/Wifi-Ruim-Icon.png"),
     Pessimo: require("../assets/Wifi-Pessimo-Icon.png"),
   };
 
-  const sinal: NivelWifi = "Excelente"; // Exemplo de valor, você pode atualizar isso com base na força do sinal real
+  const sinal: NivelWifi = "Ótimo"; // Exemplo de valor, você pode atualizar isso com base na força do sinal real
 
   const [mostrarSenha, setMostrarSenha] = useState(false);
 
@@ -52,7 +53,7 @@ export default function RedeDetectada() {
           </View>
 
           <View style={styles.colunaDireita}>
-            <Text style={styles.subTitulo}>Baixa</Text>
+            <SubTitulo texto={"Baixa"}></SubTitulo>
             <Text style={styles.textoNormal}>
               Sua conexão está estável no momento, com boa velocidade para
               navegação.
@@ -77,7 +78,7 @@ export default function RedeDetectada() {
           </View>
 
           <View style={styles.colunaDireita}>
-            <Text style={styles.subTitulo}>Baixa</Text>
+            <SubTitulo texto={"Baixa"}></SubTitulo>
             <Text style={styles.textoNormal}>
               Sua conexão está estável no momento, com boa velocidade para
               navegação.
