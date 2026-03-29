@@ -7,18 +7,20 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import CardInfoGeral from "../components/CardInfoGeral";
+import SubTitulo from "../components/SubTitulo";
 
 export default function RedeDetectada() {
-  type NivelWifi = "Excelente" | "Bom" | "Ruim" | "Pessimo";
+  type NivelWifi = "Ótimo" | "Bom" | "Ruim" | "Pessimo";
 
   const imagensWifi: Record<NivelWifi, any> = {
-    Excelente: require("../assets/Wifi-Excelente-Icon.png"),
+    Ótimo: require("../assets/Wifi-Otimo-Icon.png"),
     Bom: require("../assets/Wifi-Bom-Icon.png"),
     Ruim: require("../assets/Wifi-Ruim-Icon.png"),
     Pessimo: require("../assets/Wifi-Pessimo-Icon.png"),
   };
 
-  const sinal: NivelWifi = "Excelente"; // Exemplo de valor, você pode atualizar isso com base na força do sinal real
+  const sinal: NivelWifi = "Ótimo"; // Exemplo de valor, você pode atualizar isso com base na força do sinal real
 
   const [mostrarSenha, setMostrarSenha] = useState(false);
 
@@ -33,20 +35,7 @@ export default function RedeDetectada() {
         <Text style={styles.Titulo}>Nome do Wifi</Text>
       </View>
 
-      <View style={styles.infoGeral}>
-        <Text style={styles.Titulo}>Informações Gerais</Text>
-        <Text style={styles.textoNormal}>Nome da rede: FulanodeTal</Text>
-        <Text style={styles.textoNormal}>Intensidade do sinal: Forte</Text>
-        <Text style={styles.textoNormal}>Canal utilizado: 11</Text>
-        <Text style={styles.textoNormal}>Frequência da rede: 2.4Gz</Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={styles.textoNormal}>Tipo de segurança: Insegura</Text>
-          <Image
-            style={{ width: 18, height: 18, marginLeft: 5 }}
-            source={require("../assets/Atencao-Icon.png")}
-          ></Image>
-        </View>
-      </View>
+      <CardInfoGeral rede={undefined} />
 
       <View style={styles.infoGeral}>
         <Text style={styles.Titulo}>Qualidade do Wifi</Text>
@@ -64,7 +53,7 @@ export default function RedeDetectada() {
           </View>
 
           <View style={styles.colunaDireita}>
-            <Text style={styles.subTitulo}>Baixa</Text>
+            <SubTitulo texto={"Baixa"}></SubTitulo>
             <Text style={styles.textoNormal}>
               Sua conexão está estável no momento, com boa velocidade para
               navegação.
@@ -89,7 +78,7 @@ export default function RedeDetectada() {
           </View>
 
           <View style={styles.colunaDireita}>
-            <Text style={styles.subTitulo}>Baixa</Text>
+            <SubTitulo texto={"Baixa"}></SubTitulo>
             <Text style={styles.textoNormal}>
               Sua conexão está estável no momento, com boa velocidade para
               navegação.
@@ -159,12 +148,6 @@ const styles = StyleSheet.create({
   colunaDireita: {
     flex: 1,
     justifyContent: "center",
-  },
-
-  subTitulo: {
-    fontSize: 30,
-    fontWeight: "bold",
-    marginBottom: 5,
   },
 
   button: {

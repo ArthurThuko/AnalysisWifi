@@ -15,7 +15,7 @@ export function getSeguranca(cap: string) {
 }
 
 export function getQualidadeSinal(level: number) {
-  if (level >= -50) return "Excelente";
+  if (level >= -50) return "Ótimo";
   if (level >= -70) return "Bom";
   if (level >= -80) return "Médio";
   return "Ruim";

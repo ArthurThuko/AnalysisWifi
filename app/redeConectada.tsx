@@ -7,18 +7,29 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 
 export default function RedeConectada() {
-  type NivelWifi = "Excelente" | "Bom" | "Ruim" | "Pessimo";
+  type NivelWifi = "Ótimo" | "Bom" | "Ruim" | "Pessimo";
 
   const imagensWifi: Record<NivelWifi, any> = {
-    Excelente: require("../assets/Wifi-Excelente-Icon.png"),
+    Ótimo: require("../assets/Wifi-Otimo-Icon.png"),
     Bom: require("../assets/Wifi-Bom-Icon.png"),
     Ruim: require("../assets/Wifi-Ruim-Icon.png"),
     Pessimo: require("../assets/Wifi-Pessimo-Icon.png"),
   };
 
-  const sinal: NivelWifi = "Excelente"; // Exemplo de valor, você pode atualizar isso com base na força do sinal real
+  const params = useLocalSearchParams();
+  const nome = params.nome;
+  const sinal = params.sinal;
+  const sinalFormatado = (sinal || "Ótimo") as
+    | "Ótimo"
+    | "Bom"
+    | "Ruim"
+    | "Pessimo";
+  const canal = params.canal;
+  const frequencia = params.frequencia;
+  const seguranca = params.seguranca;
 
   const [mostrarSenha, setMostrarSenha] = useState(false);
 
@@ -27,7 +38,10 @@ export default function RedeConectada() {
       <View style={styles.InfoTopo}>
         <Image
           style={styles.wifiImagem}
-          source={imagensWifi[sinal] || require("../assets/Wifi-Erro-Icon.png")}
+          source={
+            imagensWifi[sinalFormatado] ||
+            require("../assets/Wifi-Erro-Icon.png")
+          }
         />
 
         <Text style={styles.Titulo}>Nome do Wifi</Text>
@@ -52,16 +66,17 @@ export default function RedeConectada() {
 
       <View style={styles.infoGeral}>
         <Text style={styles.Titulo}>Informações Gerais</Text>
-        <Text style={styles.textoNormal}>Nome da rede: FulanodeTal</Text>
-        <Text style={styles.textoNormal}>Intensidade do sinal: Forte</Text>
-        <Text style={styles.textoNormal}>Canal utilizado: 11</Text>
-        <Text style={styles.textoNormal}>Frequência da rede: 2.4Gz</Text>
+        <Text style={styles.textoNormal}>Nome da rede: {nome}</Text>
+        <Text style={styles.textoNormal}>Intensidade do sinal: {sinal}</Text>
+        <Text style={styles.textoNormal}>Canal utilizado: {canal}</Text>
+        <Text style={styles.textoNormal}>Frequência da rede: {frequencia}</Text>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={styles.textoNormal}>Tipo de segurança: Insegura</Text>
-          <Image
-            style={{ width: 18, height: 18, marginLeft: 5 }}
-            source={require("../assets/Atencao-Icon.png")}
-          ></Image>
+          {seguranca === "Aberta" && (
+            <Image
+              style={{ width: 18, height: 18, marginLeft: 5 }}
+              source={require("../assets/Atencao-Icon.png")}
+            />
+          )}
         </View>
       </View>
 
@@ -130,7 +145,7 @@ export default function RedeConectada() {
             *Informações sobre o dispositivo*
           </Text>
         </View>
-        
+
         <View style={styles.dispositivoContainer}>
           <Image
             source={require("../assets/Dispositivos-Icon.png")}
