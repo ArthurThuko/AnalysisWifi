@@ -32,6 +32,12 @@ export default function RedesEscaneadas() {
     carregarRedes();
   }, []);
 
+  const router = useRouter();
+
+  const reloadTela = () => {
+    router.replace("/redesEscaneadas");
+  };
+
   const [redes, setRedes] = useState<any[]>([]);
   const [redeAtual, setRedeAtual] = useState<any>(null);
 
@@ -64,7 +70,7 @@ export default function RedesEscaneadas() {
         )}
       </ContainerScroll>
 
-      <ButtonReload onPress={carregarRedes}></ButtonReload>
+      <ButtonReload onPress={reloadTela}></ButtonReload>
     </View>
   );
 }
