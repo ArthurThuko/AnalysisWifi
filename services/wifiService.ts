@@ -2,12 +2,14 @@ import WifiManager from "react-native-wifi-reborn";
 import { wifiMock } from "../mocks/wifiMock";
 import { WifiNetwork } from "../types/WifiNetwork";
 
-const USE_MOCK = true;
-
 export async function escanearRedes(): Promise<WifiNetwork[]> {
+  const USE_MOCK = process.env.USE_MOCK === "true";
+
   try {
     if (USE_MOCK) {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // simula delay
+      if (USE_MOCK && process.env.NODE_ENV !== "test") {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
       return wifiMock;
     }
 
@@ -21,6 +23,7 @@ export async function escanearRedes(): Promise<WifiNetwork[]> {
 }
 
 export async function getRedeAtual(): Promise<string | null> {
+  const USE_MOCK = process.env.USE_MOCK === "true";
   try {
     if (USE_MOCK) {
       return "Casa Arthur";
