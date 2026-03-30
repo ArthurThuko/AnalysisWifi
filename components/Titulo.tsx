@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 
-export default function Titulo({ texto }: { texto: string }) {
+export default function Titulo({ texto }: { texto: string | string[] }) {
   return <Text style={styles.titulo}>{texto}</Text>;
 }
 

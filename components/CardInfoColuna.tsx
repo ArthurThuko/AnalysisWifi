@@ -6,11 +6,11 @@ import TextoNormal from "./TextoNormal";
 import SubTitulo from "./SubTitulo";
 
 interface Rede {
-  nome: string;
-  sinal: string;
-  canal: string;
-  frequencia: string;
-  seguranca: string;
+  nome: string | string[];
+  sinal: string | string[];
+  canal: string | string[];
+  frequencia: string | string[];
+  seguranca: string | string[];
 }
 
 interface Props {
