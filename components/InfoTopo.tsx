@@ -2,7 +2,6 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import ImagemDinamicaWifi from "./ImagemDinamicaWifi";
 import Titulo from "./Titulo";
-import SenhaContainer from "./SenhaContainer";
 
 export default function InfoTopo({ nome, sinalFormatado }: { nome: string | string[]; sinalFormatado: string }) {
   return (
@@ -11,7 +10,6 @@ export default function InfoTopo({ nome, sinalFormatado }: { nome: string | stri
 
       <Titulo texto={nome}></Titulo>
 
-      <SenhaContainer></SenhaContainer>
     </View>
   );
 }
