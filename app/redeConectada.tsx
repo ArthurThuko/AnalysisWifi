@@ -32,7 +32,7 @@ export default function RedeConectada() {
         seguranca={seguranca}
       ></InfoGeral>
 
-      <CardQualidadeWifi />
+      <CardQualidadeWifi sinalFormatado={sinalFormatado} />
 
       <CardInterferencias />
 
