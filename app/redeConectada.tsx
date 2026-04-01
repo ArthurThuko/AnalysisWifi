@@ -34,7 +34,7 @@ export default function RedeConectada() {
 
       <CardQualidadeWifi sinalFormatado={sinalFormatado} />
 
-      <CardInterferencias />
+      <CardInterferencias canalAtual={canal} />
 
       <CardDispositivos />
     </ContainerScroll>

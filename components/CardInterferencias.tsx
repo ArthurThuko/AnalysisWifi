@@ -4,8 +4,18 @@ import Titulo from "./Titulo";
 import Button from "./Button";
 import SubTitulo from "./SubTitulo";
 import TextoExtraNormal from "./TextoExtraNormal";
+import { getCanal } from "../utils/wifiUtils";
+import { escanearRedes } from "../services/wifiService";
 
-export default function CardInterferencias() {
+export default function CardInterferencias({
+  canalAtual,
+}: {
+  canalAtual: string | string[];
+}) {
+  const [mostrar, setMostrar] = React.useState(false);
+  const [interferencia, setInterferencia] = React.useState("");
+  const [quantidade, setQuantidade] = React.useState(0);
+
   return (
     <View style={[styles.containerCardInterferencias, { marginTop: 30 }]}>
       <Titulo texto={"Interferências"}></Titulo>
@@ -17,27 +27,52 @@ export default function CardInterferencias() {
           />
 
           <Button
-            title={"Ver Interferências"}
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
+            title={mostrar ? "Ocultar Interferências" : "Ver Interferências"}
+            onPress={async () => {
+              const novoEstado = !mostrar;
+              setMostrar(novoEstado);
+
+              if (novoEstado) {
+                const redes = await escanearRedes();
+                const { nivel, quantidade } = calcularInterferenciaDetalhada(redes, Number(canalAtual));
+                setInterferencia(nivel);
+                setQuantidade(quantidade);}
             }}
             height={50}
-            width={150}
+            width={180}
             fontSize={16}
-          ></Button>
-        </View>
-
-        <View style={styles.colunaDireita}>
-          <SubTitulo texto={"Baixa"}></SubTitulo>
-          <TextoExtraNormal
-            texto={
-              "Sua conexão está estável no momento, com boa velocidade para navegação."
-            }
           />
         </View>
+
+        {mostrar && (
+          <View style={styles.colunaDireita}>
+            <SubTitulo texto={interferencia} />
+            <TextoExtraNormal texto={`Canal atual: ${canalAtual}`} />
+            <TextoExtraNormal
+              texto={`Quantidade de redes no canal: ${quantidade}`}
+            />
+          </View>
+        )}
       </View>
     </View>
   );
+}
+
+export function calcularInterferenciaDetalhada(
+  redes: any[],
+  canalAtual: number,
+) {
+  const redesNoCanal = redes.filter(
+    (rede) => getCanal(rede.frequency) === canalAtual,
+  );
+
+  const quantidade = redesNoCanal.length;
+
+  let nivel = "Baixa";
+  if (quantidade > 2) nivel = "Média";
+  if (quantidade > 5) nivel = "Alta";
+
+  return { nivel, quantidade };
 }
 
 const styles = StyleSheet.create({
