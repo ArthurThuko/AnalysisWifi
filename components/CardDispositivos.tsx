@@ -1,21 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import Titulo from "./Titulo";
 import TextoExtraNormal from "./TextoExtraNormal";
+import { escanearDispositivos } from "../services/wifiService";
 
 export default function CardInterferencias() {
+  const [dispositivos, setDispositivos] = React.useState<string[]>([]);
+  const [qtdDispositivos, setQtdDispositivos] = React.useState(0);
+
+  async function carregarDispositivos() {
+    const lista = await escanearDispositivos();
+
+    setQtdDispositivos(lista.length);
+    setDispositivos(lista);
+  }
+
+  useEffect(() => {
+    carregarDispositivos();
+  }, []);
+
   return (
     <View style={[styles.containerCardDispositivos, { marginTop: 30 }]}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Titulo texto={"Dispositivos Conectados: 3"} />
+        <Titulo texto={"Dispositivos Conectados: " + qtdDispositivos} />
       </View>
 
       <View style={styles.dispositivoContainer}>
         <Image
           source={require("../assets/Dispositivos-Icon.png")}
-          style={{ width: 100, height: 100, marginRight: 10 }}
+          style={{ width: 100, height: 100, marginBottom: 10, marginRight: 20 }}
         />
-        <TextoExtraNormal texto={"*Informações sobre o dispositivo*"} />
+
+        <TextoExtraNormal texto={`IPs encontrados: `} />
+
+        {dispositivos.map((ip) => (
+          <TextoExtraNormal key={ip} texto={ip} />
+        ))}
       </View>
     </View>
   );

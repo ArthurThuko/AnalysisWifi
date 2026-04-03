@@ -23,7 +23,7 @@ export default function CardInterferencias({
         <View style={styles.colunaEsquerda}>
           <Image
             source={require("../assets/Interferencia-Icon.png")}
-            style={{ width: 90, height: 80, marginBottom: 3 }}
+            style={{ width: 90, height: 90, marginBottom: 3 }}
           />
 
           <Button

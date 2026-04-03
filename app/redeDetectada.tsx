@@ -8,35 +8,33 @@ import CardInterferencias from "../components/CardInterferencias";
 import CardDispositivos from "../components/CardDispositivos";
 
 export default function RedeDetectada() {
-    const params = useLocalSearchParams();
-      const nome = params.nome;
-      const sinal = params.sinal;
-      const sinalFormatado = (sinal || "Ótimo") as
-        | "Ótimo"
-        | "Bom"
-        | "Médio"
-        | "Ruim";
-      const canal = params.canal;
-      const frequencia = params.frequencia;
-      const seguranca = params.seguranca;
-    
-      return (
-        <ContainerScroll>
-          <InfoTopo nome={nome} sinalFormatado={sinalFormatado}></InfoTopo>
-    
-          <InfoGeral
-            nome={nome}
-            sinal={sinal}
-            canal={canal}
-            frequencia={frequencia}
-            seguranca={seguranca}
-          ></InfoGeral>
-    
-          <CardQualidadeWifi />
-    
-          <CardInterferencias />
-    
-          <CardDispositivos />
-        </ContainerScroll>
+  const params = useLocalSearchParams();
+  const nome = params.nome;
+  const sinal = params.sinal;
+  const sinalFormatado = (sinal || "Ótimo") as
+    | "Ótimo"
+    | "Bom"
+    | "Médio"
+    | "Ruim";
+  const canal = params.canal;
+  const frequencia = params.frequencia;
+  const seguranca = params.seguranca;
+
+  return (
+    <ContainerScroll>
+      <InfoTopo nome={nome} sinalFormatado={sinalFormatado}></InfoTopo>
+
+      <InfoGeral
+        nome={nome}
+        sinal={sinal}
+        canal={canal}
+        frequencia={frequencia}
+        seguranca={seguranca}
+      ></InfoGeral>
+
+      <CardQualidadeWifi sinalFormatado={sinalFormatado} />
+
+      <CardInterferencias canalAtual={canal} />
+    </ContainerScroll>
   );
 }
