@@ -22,11 +22,12 @@ export default function InfoGeral({
       <TextoExtraNormal texto={"Nome da rede: " + nome}></TextoExtraNormal>
       <TextoExtraNormal texto={"Intensidade do sinal: " + sinal}></TextoExtraNormal>
       <TextoExtraNormal texto={"Canal utilizado: " + canal}></TextoExtraNormal>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
       <TextoExtraNormal texto={"Frequência da rede: " + frequencia}></TextoExtraNormal>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <TextoExtraNormal texto={"Segurança da rede: " + seguranca}></TextoExtraNormal>
         {seguranca === "Aberta" && (
           <Image
-            style={{ width: 18, height: 18, marginLeft: 5 }}
+            style={{ width: 18, height: 18, marginLeft: 7 }}
             source={require("../assets/Atencao-Icon.png")}
           />
         )}
