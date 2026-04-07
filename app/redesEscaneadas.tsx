@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 
 import { escanearRedes, getRedeAtual } from "../services/wifiService";
-import { getFrequencia, getCanal, getSeguranca, getQualidadeSinal } from "../utils/wifiUtils";
+import {
+  getFrequencia,
+  getCanal,
+  getSeguranca,
+  getQualidadeSinal,
+} from "../utils/wifiUtils";
 
 import CardInfoColuna from "../components/CardInfoColuna";
 import LinhaDivisoria from "../components/LinhaDivisoria";
@@ -12,6 +17,8 @@ import Titulo from "../components/Titulo";
 import ButtonReload from "../components/ButtonReload";
 
 export default function RedesEscaneadas() {
+  const [loading, setLoading] = useState(true);
+
   const carregarRedes = async () => {
     const lista = await escanearRedes();
     const tratadas = lista.map((r: any) => ({
@@ -29,7 +36,18 @@ export default function RedesEscaneadas() {
   };
 
   useEffect(() => {
-    carregarRedes();
+    async function carregarDados() {
+      try {
+        const resultado = await escanearRedes();
+        setRedes(resultado);
+      } catch (erro) {
+        console.log(erro);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    carregarDados();
   }, []);
 
   const router = useRouter();
