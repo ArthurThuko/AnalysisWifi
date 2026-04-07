@@ -32,7 +32,7 @@ export default function CardInfoColuna({ rede, imagem, redeAtual }: Props) {
             title="Ver Detalhes"
             onPress={() =>
               router.push({
-                pathname: "/redeConectada",
+                pathname: redeAtual ? "/redeConectada" : "/redeDetectada",
                 params: {
                   nome: rede.nome,
                   sinal: rede.sinal,

@@ -5,7 +5,6 @@ import InfoTopo from "../components/InfoTopo";
 import InfoGeral from "../components/InfoGeral";
 import CardQualidadeWifi from "../components/CardQualidadeWifi";
 import CardInterferencias from "../components/CardInterferencias";
-import CardDispositivos from "../components/CardDispositivos";
 
 export default function RedeDetectada() {
   const params = useLocalSearchParams();
