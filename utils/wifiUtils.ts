@@ -3,10 +3,19 @@ export function getFrequencia(freq: number) {
 }
 
 export function getCanal(freq: number) {
-  return Math.floor((freq - 2407) / 5);
+  if (freq >= 2412 && freq <= 2484) {
+    return Math.floor((freq - 2407) / 5);
+  }
+
+  if (freq >= 5000 && freq <= 5900) {
+    return Math.floor((freq - 5000) / 5);
+  }
+
+  return "Canal Desconhecido";
 }
 
 export function getSeguranca(cap: string) {
+  if (cap.includes("UNKNOWN")) return "Desconhecida";
   if (cap.includes("WPA3")) return "WPA3";
   if (cap.includes("WPA2")) return "WPA2";
   if (cap.includes("WPA")) return "WPA";

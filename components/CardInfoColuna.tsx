@@ -6,11 +6,11 @@ import TextoNormal from "./TextoNormal";
 import SubTitulo from "./SubTitulo";
 
 interface Rede {
-  nome: string;
-  sinal: string;
-  canal: string;
-  frequencia: string;
-  seguranca: string;
+  nome: string | string[];
+  sinal: string | string[];
+  canal: string | string[];
+  frequencia: string | string[];
+  seguranca: string | string[];
 }
 
 interface Props {
@@ -32,7 +32,7 @@ export default function CardInfoColuna({ rede, imagem, redeAtual }: Props) {
             title="Ver Detalhes"
             onPress={() =>
               router.push({
-                pathname: "/redeConectada",
+                pathname: redeAtual ? "/redeConectada" : "/redeDetectada",
                 params: {
                   nome: rede.nome,
                   sinal: rede.sinal,

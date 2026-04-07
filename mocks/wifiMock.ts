@@ -3,7 +3,7 @@ import { WifiNetwork } from "../types/WifiNetwork";
 export const wifiMock: WifiNetwork[] = [
   {
     SSID: "Casa Arthur",
-    level: -35,
+    level: -80,
     frequency: 2412,
     capabilities: "[WPA2-PSK-CCMP][ESS]",
   },
