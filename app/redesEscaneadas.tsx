@@ -15,31 +15,39 @@ import LinhaDivisoria from "../components/LinhaDivisoria";
 import ContainerScroll from "../components/ContainerScroll";
 import Titulo from "../components/Titulo";
 import ButtonReload from "../components/ButtonReload";
+import Loading from "../components/Loading";
 
 export default function RedesEscaneadas() {
   const [loading, setLoading] = useState(true);
+  const [redes, setRedes] = useState<any[]>([]);
+  const [redeAtual, setRedeAtual] = useState<any>(null);
 
   const carregarRedes = async () => {
-    const lista = await escanearRedes();
-    const tratadas = lista.map((r: any) => ({
-      nome: r.SSID,
-      sinal: getQualidadeSinal(r.level),
-      frequencia: getFrequencia(r.frequency),
-      canal: getCanal(r.frequency),
-      seguranca: getSeguranca(r.capabilities),
-    }));
-    setRedes(tratadas);
+    try {
+      const lista = await escanearRedes();
 
-    const ssidAtual = await getRedeAtual();
-    const redeEncontrada = tratadas.find((r) => r.nome === ssidAtual);
-    setRedeAtual(redeEncontrada);
+      const tratadas = lista.map((r: any) => ({
+        nome: r.SSID,
+        sinal: getQualidadeSinal(r.level),
+        frequencia: getFrequencia(r.frequency),
+        canal: getCanal(r.frequency),
+        seguranca: getSeguranca(r.capabilities),
+      }));
+
+      setRedes(tratadas);
+
+      const ssidAtual = await getRedeAtual();
+      const redeEncontrada = tratadas.find((r) => r.nome === ssidAtual);
+      setRedeAtual(redeEncontrada);
+    } catch (error) {
+      console.log("Erro ao carregar redes:", error);
+    }
   };
 
   useEffect(() => {
     async function carregarDados() {
       try {
-        const resultado = await escanearRedes();
-        setRedes(resultado);
+        await carregarRedes();
       } catch (erro) {
         console.log(erro);
       } finally {
@@ -50,14 +58,15 @@ export default function RedesEscaneadas() {
     carregarDados();
   }, []);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   const router = useRouter();
 
   const reloadTela = () => {
     router.replace("/redesEscaneadas");
   };
-
-  const [redes, setRedes] = useState<any[]>([]);
-  const [redeAtual, setRedeAtual] = useState<any>(null);
 
   return (
     <View style={{ flex: 1 }}>
