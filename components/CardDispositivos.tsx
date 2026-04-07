@@ -3,10 +3,12 @@ import { View, StyleSheet, Image } from "react-native";
 import Titulo from "./Titulo";
 import TextoExtraNormal from "./TextoExtraNormal";
 import { escanearDispositivos } from "../services/wifiService";
+import Loading from "./Loading";
 
 export default function CardInterferencias() {
   const [dispositivos, setDispositivos] = React.useState<string[]>([]);
   const [qtdDispositivos, setQtdDispositivos] = React.useState(0);
+  const [loading, setLoading] = React.useState(true);
 
   async function carregarDispositivos() {
     const lista = await escanearDispositivos();
@@ -19,24 +21,40 @@ export default function CardInterferencias() {
     carregarDispositivos();
   }, []);
 
+    useEffect(() => {
+      async function carregarDados() {
+        try {
+          await carregarDispositivos();
+        } catch (erro) {
+          console.log(erro);
+        } finally {
+          setLoading(false);
+        }
+      }
+  
+      carregarDados();
+    }, []);
+  
+    if (loading) {
+      return <Loading />;
+    }
+
   return (
     <View style={[styles.containerCardDispositivos, { marginTop: 30 }]}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Titulo texto={"Dispositivos Conectados: " + qtdDispositivos} />
       </View>
 
-      <View style={styles.dispositivoContainer}>
-        <Image
-          source={require("../assets/Dispositivos-Icon.png")}
-          style={{ width: 100, height: 100, marginBottom: 10, marginRight: 20 }}
-        />
-
-        <TextoExtraNormal texto={`IPs encontrados: `} />
-
-        {dispositivos.map((ip) => (
-          <TextoExtraNormal key={ip} texto={ip} />
-        ))}
-      </View>
+      <View style={{ marginTop: 10 }} />
+      {dispositivos.map((ip) => (
+        <View key={ip} style={styles.itemDispositivo}>
+          <Image
+            source={require("../assets/Dispositivos-Icon.png")}
+            style={styles.icone}
+          />
+          <TextoExtraNormal texto={ip} />
+        </View>
+      ))}
     </View>
   );
 }
@@ -47,6 +65,7 @@ const styles = StyleSheet.create({
     width: "100%",
     textAlign: "left",
   },
+
   containerColunas: {
     flexDirection: "row",
     marginTop: 10,
@@ -62,9 +81,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  dispositivoContainer: {
+
+  itemDispositivo: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
+    marginBottom: 10,
+  },
+
+  icone: {
+    width: 80,
+    height: 80,
+    marginRight: 10,
   },
 });
