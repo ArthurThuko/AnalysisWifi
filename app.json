@@ -20,7 +20,20 @@
       "expo-router"
     ],
     "android": {
-      "package": "com.anonymous.analysiswifi"
-    }
+      "package": "com.anonymous.analysiswifi",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_WIFI_STATE",
+        "CHANGE_WIFI_STATE"
+      ]
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "56c2ea95-2f9c-4a2a-93b3-7cfad301b5cd"
+      }
+    },
+    "owner": "arthurthuko"
   }
 }
