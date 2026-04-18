@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 
-import { escanearRedes, getRedeAtual } from "../services/wifiService";
+import { escanearRedes, getRedeAtual, pedirPermissao } from "../services/wifiService";
 import {
   getFrequencia,
   getCanal,
@@ -24,6 +24,7 @@ export default function RedesEscaneadas() {
 
   const carregarRedes = async () => {
     try {
+      await pedirPermissao();
       const lista = await escanearRedes();
 
       const tratadas = lista.map((r: any) => ({

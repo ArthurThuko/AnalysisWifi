@@ -2,8 +2,9 @@ import WifiManager from "react-native-wifi-reborn";
 import * as Network from "expo-network";
 import { wifiMock } from "../mocks/wifiMock";
 import { WifiNetwork } from "../types/WifiNetwork";
+import * as Location from "expo-location";
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 export async function escanearRedes(): Promise<WifiNetwork[]> {
   try {
@@ -58,23 +59,31 @@ export async function escanearDispositivos() {
     const baseIP = ip.substring(0, ip.lastIndexOf("."));
 
     const dispositivos: string[] = [];
-    const requests = [];
+    const gateway = baseIP + ".1";
+    dispositivos.push(gateway);
+    const requests: Promise<void>[] = [];
+    const portas = [80, 8080, 3000, 443];
 
     for (let i = 1; i < 255; i++) {
       const host = `${baseIP}.${i}`;
 
-      const req = Promise.race([
-        fetch(`http://${host}`, { method: "HEAD" }),
-        new Promise((_, reject) =>
-          setTimeout(() => reject("timeout"), 300)
-        ),
-      ])
-        .then(() => dispositivos.push(host))
-        .catch(() => {});
+      for (const porta of portas) {
+        const req = Promise.race([
+          fetch(`http://${host}:${porta}`, { method: "HEAD" }),
+          new Promise((_, reject) => setTimeout(() => reject("timeout"), 800)),
+        ])
+          .then(() => {
+            if (!dispositivos.includes(host)) {
+              dispositivos.push(host);
+            }
+          })
+          .catch(() => {});
 
-      requests.push(req);
+        requests.push(req);
+      }
 
-      if (requests.length >= 20) {
+      // controle de concorrência
+      if (requests.length >= 30) {
         await Promise.all(requests);
         requests.length = 0;
       }
@@ -86,5 +95,13 @@ export async function escanearDispositivos() {
   } catch (error) {
     console.log("ERRO NO SCANNER:", error);
     return [];
+  }
+}
+
+export async function pedirPermissao() {
+  const { status } = await Location.requestForegroundPermissionsAsync();
+
+  if (status !== "granted") {
+    throw new Error("Permissão de localização negada");
   }
 }
